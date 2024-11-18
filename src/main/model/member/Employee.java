@@ -1,18 +1,12 @@
 package main.model.member;
 
-import main.model.client.Client;
-
-import static java.lang.Math.abs;
-
-public class Employee extends Member {
+public class Employee {
     private int salary;
     private String position;
 
     // Creates new Employee with name and salary
     public Employee(String name, int salary) {
-        super(name);
-        this.salary = salary;
-        this.position = "";
+        // stub
     }
 
     // Creates new Employee with name and default salary of 50000
@@ -22,23 +16,11 @@ public class Employee extends Member {
 
     // getters and setters
     public String getPosition() {
-        return this.position;
+        return ""; // stub
     }
 
     public void setPosition(String position) {
-        this.position = position;
-    }
-
-    @Override
-    public int getSalaryCosts() {
-        return this.salary;
-    }
-
-    @Override
-    public void notifyClients(String message) {
-        for (Client client : this.getClients()) {
-            client.update(message);
-        }
+        // stub
     }
 
     // Returns true in the following conditions:
@@ -47,20 +29,12 @@ public class Employee extends Member {
     // this and object have the same salary
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Employee)) {
-            return false;
-        }
-        Employee employee = (Employee) obj;
-        if (!this.getName().equals(employee.getName())) {
-            return false;
-        }
-        return this.getSalaryCosts() == employee.getSalaryCosts();
+        return false; // stub
     }
 
     // Define a reasonable hashCode function based on the conditions of equals
     @Override
     public int hashCode() {
-        int hashCode = this.getName().hashCode();
-        return hashCode + this.getSalaryCosts();
+        return 0; // stub
     }
 }

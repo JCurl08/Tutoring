@@ -5,16 +5,15 @@ public class Message {
     private boolean isPublic;
 
     public Message(String message, boolean isPublic) {
-        this.message = message;
-        this.isPublic = isPublic;
+        // stub
     }
 
     // getters
     public String getMessage() {
-        return this.message;
+        return ""; // stub
     }
 
     public boolean isPublic() {
-        return this.isPublic;
+        return false; // stub
     }
 }
