@@ -14,19 +14,19 @@ public class PublicClient implements Client {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
     public void update(String message) {
-        log.addMessage(message);
+        this.log.addMessage(message);
     }
 
     @Override
     public void printLog() {
-        for (String message : log) {
+        for (String message : this.log) {
             System.out.println(message);
         }
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 }

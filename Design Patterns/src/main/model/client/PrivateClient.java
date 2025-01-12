@@ -2,16 +2,16 @@ package main.model.client;
 
 import main.model.log.PublicPrivateLog;
 
-public class PrivateClient implements Client {
-    PublicPrivateLog log;
-    PublicPrivateLog privateLog;
-    boolean includePrivate;
+public class PrivateClient implements Client{
+    private PublicPrivateLog log;
+    private PublicPrivateLog privateLog;
+    private boolean includePrivate;
 
     // Creates new PrivateClient with an empty log, empty privateLog and includePrivate set to false
     public PrivateClient() {
-        this.log = new PublicPrivateLog(false);
+        this.log = new PublicPrivateLog();
         this.privateLog = new PublicPrivateLog(true);
-        includePrivate = false;
+        this.includePrivate = false;
     }
 
     // Getters and setters
@@ -27,22 +27,21 @@ public class PrivateClient implements Client {
     @Override
     public void update(String message) {
         if (message.startsWith("private message")) {
-            privateLog.addPrivateMessage(message);
-            log.addPrivateMessage(message);
+            this.privateLog.addPrivateMessage(message);
         } else {
-            privateLog.addMessage(message);
-            log.addMessage(message);
+            this.log.addMessage(message);
+            this.privateLog.addMessage(message);
         }
     }
 
     @Override
     public void printLog() {
-        if (includePrivate) {
-            for (String message : privateLog) {
+        if (this.includePrivate) {
+            for (String message : this.privateLog) {
                 System.out.println(message);
             }
         } else {
-            for (String message : log) {
+            for (String message : this.log) {
                 System.out.println(message);
             }
         }

@@ -34,20 +34,26 @@ public class PublicPrivateLog implements Iterable<String> {
         return new LogIterator();
     }
 
-    public class LogIterator implements Iterator<String> {
-        private Iterator<Message> messageIterator;
-        private Message next;
+    private class LogIterator implements Iterator<String> {
+        Iterator<Message> it;
+        String next;
 
         public LogIterator() {
-            messageIterator = messages.iterator();
-            if (messageIterator.hasNext()) {
-                next = messageIterator.next();
-                while (!includePrivate && !next.isPublic()) {
-                    if (!messageIterator.hasNext()) {
-                        next = null;
-                        break;
+            it = messages.iterator();
+            if (it.hasNext()) {
+                if (includePrivate) {
+                    next = it.next().getMessage();
+                } else {
+                    Message nextMessage = it.next();
+                    while (!nextMessage.isPublic()) {
+                        if (it.hasNext()) {
+                            nextMessage = it.next();
+                        } else {
+                            next = null;
+                            return;
+                        }
                     }
-                    next = messageIterator.next();
+                    next = nextMessage.getMessage();
                 }
             }
         }
@@ -59,19 +65,25 @@ public class PublicPrivateLog implements Iterable<String> {
 
         @Override
         public String next() {
-            String result = next.getMessage();
-            next = null;
-            if (messageIterator.hasNext()) {
-                next = messageIterator.next();
-                while (!includePrivate && !next.isPublic()) {
-                    if (!messageIterator.hasNext()) {
-                        next = null;
-                        break;
+            String result = next;
+            if (it.hasNext()) {
+                if (includePrivate) {
+                    next = it.next().getMessage();
+                } else {
+                    Message nextMessage = it.next();
+                    while (!nextMessage.isPublic() && it.hasNext()) {
+                        nextMessage = it.next();
                     }
-                    next = messageIterator.next();
+                    if (nextMessage.isPublic()) {
+                        next = nextMessage.getMessage();
+                    } else {
+                        next = null;
+                    }
                 }
+            } else {
+                next = null;
             }
-            return result;
+            return next;
         }
     }
 }

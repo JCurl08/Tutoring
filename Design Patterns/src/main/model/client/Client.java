@@ -1,5 +1,6 @@
 package main.model.client;
 
+// abstract observer
 public interface Client {
     // returns the name of a publicClient or "Private Client" otherwise
     String getName();

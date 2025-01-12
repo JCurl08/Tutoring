@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Member {
     private String name;
-    private List<Client> clients;
+    private List<Client> clients; // list of abstract observers
 
     // Creates a new Member with name and empty list of clients
     public Member(String name) {
@@ -31,13 +31,22 @@ public abstract class Member {
     // Adds client to the list of clients and notifies the client that it is a client of the department
     public void addClient(Client client) {
         this.clients.add(client);
-        client.update(client.getName() + " you are now a client of " + this.getName());
+        client.update("You are now a client of " + this.name);
     }
 
-    // Removes the client from the client list and notifies the client.
-    public void removeClient(Client client) {
-        this.clients.remove(client);
-        client.update(client.getName() + " you are no longer a client of " + this.getName());
+    // Removes the client with the same name from the client list and notifies the client.
+    public void removeClient(String client) {
+        Client clientToRemove = null;
+        for (Client c : clients) {
+            if (c.getName() == client) {
+                clientToRemove = c;
+                break;
+            }
+        }
+        if (clientToRemove != null) {
+            clients.remove(clientToRemove);
+            clientToRemove.update("You are no longer a client of " + this.getName());
+        }
     }
 
     // Notifies all clients in the client list

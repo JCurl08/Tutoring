@@ -2,31 +2,20 @@ package main.model.member;
 
 import main.model.client.Client;
 
-import static java.lang.Math.abs;
-
 public class Employee extends Member {
     private int salary;
     private String position;
 
-    // Creates new Employee with name and salary
+    // Creates new Employee with name and salary and position "Employee"
     public Employee(String name, int salary) {
         super(name);
         this.salary = salary;
-        this.position = "";
+        this.position = "Employee";
     }
 
     // Creates new Employee with name and default salary of 50000
     public Employee(String name) {
         this(name, 50000);
-    }
-
-    // getters and setters
-    public String getPosition() {
-        return this.position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     @Override
@@ -41,6 +30,15 @@ public class Employee extends Member {
         }
     }
 
+    // getters and setters
+    public String getPosition() {
+        return this.position; // stub
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     // Returns true in the following conditions:
     // Obj is an instance of Employee
     // this and object have the same name
@@ -51,16 +49,16 @@ public class Employee extends Member {
             return false;
         }
         Employee employee = (Employee) obj;
-        if (!this.getName().equals(employee.getName())) {
+        if (employee.getName() != this.getName()) {
             return false;
         }
-        return this.getSalaryCosts() == employee.getSalaryCosts();
+        return employee.getSalaryCosts() == this.getSalaryCosts();
     }
 
     // Define a reasonable hashCode function based on the conditions of equals
     @Override
     public int hashCode() {
         int hashCode = this.getName().hashCode();
-        return hashCode + this.getSalaryCosts();
+        return hashCode + this.getSalaryCosts(); // stub
     }
 }

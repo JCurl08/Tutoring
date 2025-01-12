@@ -13,9 +13,9 @@ public class Business {
     // sets ceo's position to ceo and adds it to employees
     private Business(Employee ceo, String name) {
         this.ceo = ceo;
-        ceo.setPosition("CEO");
         this.employees = new Department(name);
-        this.employees.addMember(ceo);
+        ceo.setPosition("CEO");
+        employees.addMember(ceo);
     }
 
     // MODIFIES: this
@@ -25,11 +25,10 @@ public class Business {
     // and sets it to business
     // returns instance of business
     public static Business getInstance() {
-        if (Business.business == null) {
-            Business.business = new Business(new Employee("Eric Barone", 250000),
-                    "Concerned Ape");
+        if (business == null) {
+            Business.business = new Business(new Employee("Eric Barone", 250000), "Concerned Ape");
         }
-        return Business.business;
+        return business;
     }
 
     // MODIFIES: this, newCEO
@@ -38,10 +37,10 @@ public class Business {
     // Notifies all the business' clients of the change with the given message:
     // "Congratulations to _____ on becoming the new CEO"
     public void changeCEO(Employee newCEO) {
-        this.ceo.setPosition("default");
         newCEO.setPosition("CEO");
+        this.ceo.setPosition("default");
         this.ceo = newCEO;
-        this.employees.notifyClients("Congratulations to " + newCEO.getName() + " on becoming the new CEO");
+        employees.notifyClients("Congratulations to " + ceo.getName() + " on becoming the new CEO");
     }
 
     // MODIFIES: this

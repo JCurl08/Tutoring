@@ -11,10 +11,10 @@ public class Message {
 
     // getters
     public String getMessage() {
-        return this.message;
+        return this.message; // stub
     }
 
     public boolean isPublic() {
-        return this.isPublic;
+        return this.isPublic; // stub
     }
 }

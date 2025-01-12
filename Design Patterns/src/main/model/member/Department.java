@@ -2,14 +2,35 @@ package main.model.member;
 
 import main.model.client.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department extends Member {
     private List<Member> members;
 
     // Creates a new department with name and an empty list of members
-    public Department(String concernedApe) {
-        super(concernedApe);
+    public Department(String name) {
+        super(name);
+        this.members = new ArrayList<>();
+    }
+
+    @Override
+    public int getSalaryCosts() {
+        int result = 0;
+        for (Member member : members) {
+            result += member.getSalaryCosts();
+        }
+        return result;
+    }
+
+    @Override
+    public void notifyClients(String message) {
+        for (Client client : this.getClients()) {
+            client.update(message);
+        }
+        for (Member member : members) {
+            member.notifyClients(message);
+        }
     }
 
     // Adds member to members
@@ -28,37 +49,18 @@ public class Department extends Member {
     // with the message "Please say goodbye to ____ from the ____ department" with the first blank being member name and the
     // second being the name of this.
     public void removeMember(String memberName) {
-        Member memberToRemove = null;
-        for (Member member : this.members) {
-            if (member.getName().equals(memberName)) {
-                memberToRemove = member;
+        Member memberToBeRemoved = null;
+        for (Member member : members) {
+            if (member.getName() == memberName) {
+                memberToBeRemoved = member;
                 break;
             }
         }
-        if (memberToRemove != null) {
-            this.members.remove(memberToRemove);
-            if (memberToRemove.getSalaryCosts() > 100000) {
-                this.notifyClients("Please welcome " + memberToRemove.getName() + " to the " + this.getName() + " department");
+        if (memberToBeRemoved != null) {
+            members.remove(memberToBeRemoved);
+            if (memberToBeRemoved.getSalaryCosts() > 100000) {
+                notifyClients("Please say goodbye to " + memberToBeRemoved.getName() + " from the " + this.getName() + " department");
             }
-        }
-    }
-
-    @Override
-    public int getSalaryCosts() {
-        int result = 0;
-        for (Member member : this.members) {
-            result += member.getSalaryCosts();
-        }
-        return result;
-    }
-
-    @Override
-    public void notifyClients(String message) {
-        for (Member member : this.members) {
-            member.notifyClients(message);
-        }
-        for (Client client : getClients()) {
-            client.update(message);
         }
     }
 }
